@@ -31,7 +31,7 @@ import (
 	"golang.org/x/sync/errgroup"
 	pb "google.golang.org/genproto/googleapis/pubsub/v1"
 	fmpb "google.golang.org/genproto/protobuf/field_mask"
-	"google.golang.org/grpc"
+	"google.golang.org/grpc/status"
 	"google.golang.org/grpc/codes"
 )
 
@@ -282,7 +282,7 @@ func (s *Subscription) Exists(ctx context.Context) (bool, error) {
 	if err == nil {
 		return true, nil
 	}
-	if grpc.Code(err) == codes.NotFound {
+	if status.Code(err) == codes.NotFound {
 		return false, nil
 	}
 	return false, err
